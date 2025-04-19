@@ -214,6 +214,8 @@ of a philistine like me, these are the designs you get.)
 
 ## Example Tiles
 
+![all available tiles](./tiles.png)
+
 ```ruby
   {
     tileA: "\\mdbia", colorA: "silver",

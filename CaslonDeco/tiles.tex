@@ -1,0 +1,42 @@
+\documentclass{standalone}
+
+\usepackage{caslondeco}
+
+\begin{document}
+\begin{tikzpicture}[x=12pt,y=12pt]
+
+  % Define dimensions
+  \def\cardWidth{3.5in}
+  \def\cardHeight{2.0in}
+  \def\margin{11pt}
+  \def\strokeWidth{8pt}
+
+  %% draw an invisible border so the page crops to this instead of content
+  \draw[black!20, line width=1pt] (0,0) rectangle (\cardWidth,\cardHeight);
+  \clip (0,0) rectangle (\cardWidth,\cardHeight);
+
+  \mdba{ 1.0}{1.5}{black}
+  \mdbb{ 3.5}{1.5}{black}
+  \mdbc{ 6.0}{1.5}{black}
+  \mdbd{ 8.5}{1.5}{black}
+  \mdbe{11.0}{1.5}{black}
+  \mdbf{13.5}{1.5}{black}
+
+  \mdbia{ 1.0}{4.0}{black}
+  \mdbib{ 3.5}{4.0}{black}
+  \mdbic{ 6.0}{4.0}{black}
+  \mdbid{ 8.5}{4.0}{black}
+  \mdbie{11.0}{4.0}{black}
+  \mdbif{13.5}{4.0}{black}
+
+  \mdbx{ 1.0}{6.5}{black}
+  \mdbxflr{ 3.5}{6.5}{black}
+  \mdbxfflr{ 6.0}{6.5}{black}
+  \mdbp{ 8.5}{6.5}{black}
+  \mdbip{ 11.0}{6.5}{black}
+
+  \mdbhx{ 1.0}{9.0}{black}
+  \mdbhxflr{ 3.5}{9.0}{black}
+
+\end{tikzpicture}
+\end{document}
