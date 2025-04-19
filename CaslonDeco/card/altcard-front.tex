@@ -1,0 +1,42 @@
+\documentclass{standalone}
+
+\usepackage{caslondeco}
+\begin{document}
+\begin{tikzpicture}[x=12pt,y=12pt]
+
+  % Define dimensions
+  \def\cardWidth{3.5in}
+  \def\cardHeight{2.0in}
+  \def\margin{11pt}
+  \def\strokeWidth{8pt}
+
+  %% draw an invisible border so the page crops to this instead of content
+  \draw[black!20, line width=1pt] (0,0) rectangle (\cardWidth,\cardHeight);
+  \clip (0,0) rectangle (\cardWidth,\cardHeight);
+
+  \drawxgrid{%
+    Nx=21,%
+    Ny=12,%
+    displaywidth=3.5in,
+    displayheight=2in,
+    color=black!40!white,
+    yshift=0.5,
+    flrmodval=3,
+    xshift=0.0, 
+    initial={\footnotesize \textsw{b}}
+  }
+
+
+  \dotframecentered{%
+    Nx=11,
+    Ny=3,
+    text={
+      \textsc{Bailey-``Bob'' McCourt} \\
+      \raisebox{-2pt}{\ornament{43}} \textsw{adventurer} \raisebox{-2pt}{\scalebox{-1}[1]{\ornament{43}}}
+    },
+    position={(\cardWidth/2, \cardHeight/2)},
+    background=black!2!white,
+  }
+
+\end{tikzpicture}
+\end{document}

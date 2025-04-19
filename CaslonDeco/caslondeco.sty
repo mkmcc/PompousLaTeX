@@ -1,0 +1,496 @@
+\RequirePackage[LY1]{fontenc}
+\RequirePackage{CaslonPro}
+
+\RequirePackage{xargs}
+
+\RequirePackage{etoolbox}
+
+\RequirePackage{tikz}
+\usetikzlibrary{positioning,fit,calc}
+\RequirePackage{pgfmath}
+
+\RequirePackage{ifthen}
+
+\newcommand{\myx}{\ornament{13}}
+\newcommand{\myxflr}{\ornament{48}}
+
+\newcommand{\mydb}[7]{%
+  \node[color=#3, font=\fontsize{12pt}{12pt}\selectfont] at (#1+0, #2+0) {#4};
+  \node[color=#3, font=\fontsize{12pt}{12pt}\selectfont] at (#1+1, #2+0) {#5};
+  \node[color=#3, font=\fontsize{12pt}{12pt}\selectfont] at (#1+0, #2+1) {#6};
+  \node[color=#3, font=\fontsize{12pt}{12pt}\selectfont] at (#1+1, #2+1) {#7};
+}
+
+\newcommand{\mydbi}[7]{%
+  \node[color=#3, font=\fontsize{12pt}{12pt}\selectfont] at (#1+1, #2+1) {#4};
+  \node[color=#3, font=\fontsize{12pt}{12pt}\selectfont] at (#1+0, #2+1) {#5};
+  \node[color=#3, font=\fontsize{12pt}{12pt}\selectfont] at (#1+1, #2+0) {#6};
+  \node[color=#3, font=\fontsize{12pt}{12pt}\selectfont] at (#1+0, #2+0) {#7};
+}
+
+\newcommand{\mdbx}[3]{%
+  \mydb{#1}{#2}{#3}{\ornament{13}}{\ornament{13}}{\ornament{13}}{\ornament{13}}
+}
+
+\newcommand{\mdbhx}[3]{%
+  \mydb{#1}{#2}{#3}{\phantom{\ornament{13}}}{\ornament{13}}{\ornament{13}}{\phantom{\ornament{13}}}
+}
+
+\newcommand{\mdbihx}[3]{%
+  \mydb{#1}{#2}{#3}{\ornament{13}}{\phantom{\ornament{13}}}{\phantom{\ornament{13}}}{\ornament{13}}
+}
+
+\newcommand{\mdbxflr}[3]{%
+  \mydb{#1}{#2}{#3}{\ornament{13}}{\ornament{37}}{\ornament{13}}{\ornament{13}}
+}
+
+\newcommand{\mdbhxflr}[3]{%
+  \mydb{#1}{#2}{#3}{\phantom{\ornament{13}}}{\ornament{37}}{\ornament{13}}{\phantom{\ornament{13}}}
+}
+
+\newcommand{\mdbxfflr}[3]{%
+  \mydb{#1}{#2}{#3}{\ornament{37}}{\ornament{37}}{\ornament{37}}{\ornament{37}}
+}
+
+\newcommand{\mdbp}[3]{%
+  \mydb{#1}{#2}{#3}{\ornament{0}}{\ornament{4}}{\ornament{4}}{\ornament{0}}
+}
+
+\newcommand{\mdbip}[3]{%
+  \mydb{#1}{#2}{#3}{\ornament{4}}{\ornament{0}}{\ornament{0}}{\ornament{4}}
+}
+
+\newcommand{\mdba}[3]{%
+  \mydb{#1}{#2}{#3}{\ornament{36}}{\ornament{35}}{\ornament{12}}{\ornament{11}}
+}
+
+\newcommand{\mdbia}[3]{%
+  \mydbi{#1}{#2}{#3}{\ornament{36}}{\ornament{35}}{\ornament{12}}{\ornament{11}}
+}
+
+\newcommand{\mdbb}[3]{%
+  \mydb{#1}{#2}{#3}{\ornament{5}}{\ornament{10}}{\ornament{29}}{\ornament{34}}
+}
+
+\newcommand{\mdbib}[3]{%
+  \mydbi{#1}{#2}{#3}{\ornament{5}}{\ornament{10}}{\ornament{29}}{\ornament{34}}
+}
+
+\newcommand{\mdbc}[3]{%
+  \mydb{#1}{#2}{#3}{\ornament{18}}{\ornament{17}}{\ornament{42}}{\ornament{41}}
+}
+
+\newcommand{\mdbic}[3]{%
+  \mydbi{#1}{#2}{#3}{\ornament{18}}{\ornament{17}}{\ornament{42}}{\ornament{41}}
+}
+
+\newcommand{\mdbd}[3]{%
+  \mydb{#1}{#2}{#3}{\ornament{15}}{\ornament{16}}{\ornament{39}}{\ornament{40}}
+}
+
+\newcommand{\mdbid}[3]{%
+  \mydbi{#1}{#2}{#3}{\ornament{15}}{\ornament{16}}{\ornament{39}}{\ornament{40}}
+}
+
+\newcommand{\mdbe}[3]{%
+  \mydb{#1}{#2}{#3}{\ornament{26}}{\ornament{25}}{\ornament{54}}{\ornament{52}}
+}
+
+\newcommand{\mdbie}[3]{%
+  \mydb{#1}{#2}{#3}{\ornament{54}}{\ornament{52}}{\ornament{26}}{\ornament{25}}
+}
+
+\newcommand{\mdbf}[3]{%
+  \node[color=#3, font=\fontsize{12pt}{12pt}\selectfont] at (#1+0+0.125, #2+0) {\ornament{21}};
+  \node[color=#3, font=\fontsize{12pt}{12pt}\selectfont] at (#1+1-0.125, #2+0) {\ornament{8}};
+  \node[color=#3, font=\fontsize{12pt}{12pt}\selectfont] at (#1+0+0.125, #2+1) {\ornament{47}};
+  \node[color=#3, font=\fontsize{12pt}{12pt}\selectfont] at (#1+1-0.125, #2+1) {\ornament{32}};
+}
+
+\newcommand{\mdbif}[3]{%
+  \node[color=#3, font=\fontsize{12pt}{12pt}\selectfont] at (#1+1-0.125, #2+1) {\ornament{21}};
+  \node[color=#3, font=\fontsize{12pt}{12pt}\selectfont] at (#1+0+0.125, #2+1) {\ornament{8}};
+  \node[color=#3, font=\fontsize{12pt}{12pt}\selectfont] at (#1+1-0.125, #2+0) {\ornament{47}};
+  \node[color=#3, font=\fontsize{12pt}{12pt}\selectfont] at (#1+0+0.125, #2+0) {\ornament{32}};
+}
+
+%% commands can only take 9 arguments; #10 reads as #1;0
+\pgfkeys{
+  /tilepattern/.is family,
+  tilepattern/tileA/.store in = \tileA,
+  tilepattern/colorA/.store in = \colorA,
+  tilepattern/tileB/.store in = \tileB,
+  tilepattern/colorB/.store in = \colorB,
+  tilepattern/tileC/.store in = \tileC,
+  tilepattern/colorC/.store in = \colorC,
+  tilepattern/tileD/.store in = \tileD,
+  tilepattern/colorD/.store in = \colorD,
+  tilepattern/Nx/.store in = \tileNx,
+  tilepattern/Ny/.store in = \tileNy,
+  tilepattern/displaywidth/.store in=\tileDisplayWidth,
+  tilepattern/displayheight/.store in=\tileDisplayHeight,
+}
+\newcommand{\drawtilepattern}[1]{%
+  \pgfkeys{/tilepattern, #1}%
+
+  \pgfmathsetmacro{\xscale}{\tileDisplayWidth / (\tileNx * 24pt)}
+  \pgfmathsetmacro{\yscale}{\tileDisplayHeight / (\tileNy * 24pt)}
+
+  \begin{scope}[xscale=\xscale, yscale=\yscale, transform shape]
+
+  \pgfmathsetmacro{\maxi}{2*(\tileNy - 1)}%
+  \pgfmathsetmacro{\maxj}{2*(\tileNx - 1)}%
+  \foreach \i in {0,2,...,\maxi}{
+    \foreach \j in {0,2,...,\maxj}{
+      \pgfmathparse{mod(\j-\i,4)==0}
+      \ifnum\pgfmathresult=1
+        \pgfmathparse{mod(\j,4)==0}
+        \ifnum\pgfmathresult=1
+          \tileA{\j+0.5}{\i+0.5}{\colorA}%
+        \else
+          \tileB{\j+0.5}{\i+0.5}{\colorB}%
+        \fi
+      \else
+        \pgfmathparse{mod(\j,4)==0}
+        \ifnum\pgfmathresult=1
+          \tileC{\j+0.5}{\i+0.5}{\colorC}%
+        \else
+          \tileD{\j+0.5}{\i+0.5}{\colorD}%
+        \fi
+      \fi
+    }
+  }
+
+\end{scope}
+}
+
+% Define keys
+\pgfkeys{
+  /xgrid/.is family,
+  /xgrid/Nx/.store in=\xgridNx,
+  /xgrid/Ny/.store in=\xgridNy,
+  /xgrid/xshift/.store in=\xgridxshift,
+  /xgrid/yshift/.store in=\xgridyshift,
+  /xgrid/displaywidth/.store in=\xgriddisplaywidth,
+  /xgrid/displayheight/.store in=\xgriddisplayheight,
+  /xgrid/modval/.store in=\xgridmodval,
+  /xgrid/flrmodval/.store in=\xgridflrmodval,
+  /xgrid/initial/.store in=\xgridinitial,
+  /xgrid/color/.store in=\xgridcolor,
+}
+
+% define chars
+\newcommand{\myxgridchar}{\ornament{13}}
+\newcommand{\myxgridcharalt}{\ornament{37}}
+\newcommand{\myxgridflr}{\ornament{48}}
+
+% Define main macro
+\newcommand{\drawxgrid}[1]{%
+  \def\xgridxshift{0}%
+  \def\xgridyshift{0}%
+  \def\xgridmodval{0}%
+  \def\xgridflrmodval{0}%
+  \def\xgridinitial{{}}%
+
+  \pgfkeys{/xgrid, #1}%
+
+  \pgfmathtruncatemacro{\xgridxlim}{ceil(\xgridNx+\xgridxshift)}
+  \pgfmathtruncatemacro{\xgridylim}{ceil(\xgridNy+\xgridyshift)}
+
+  \pgfmathsetmacro{\xscale}{\xgriddisplaywidth / ((\xgridNx) * 12pt)}
+  \pgfmathsetmacro{\yscale}{\xgriddisplayheight / ((\xgridNy) * 12pt)}
+
+  \begin{scope}[xscale=\xscale, yscale=\yscale, transform shape]
+
+  \foreach \i in {0,...,\numexpr\xgridylim - 1}{
+    \foreach \j in {0,...,\numexpr\xgridxlim - 1}{
+      \pgfmathparse{mod(\j-\i,2)==0}
+
+      %% j-i is even... show an x
+      \ifnum\pgfmathresult=1
+
+        %% no decorated x's
+        \ifnum\xgridmodval=0
+          \node[color=\xgridcolor, font=\fontsize{12pt}{12pt}\selectfont] at (\j+0.5-\xgridxshift, \i+0.5-\xgridyshift) {\myxgridchar};
+        %% alternated regular x's and decorated x's every \xgridmodval along the diagonal
+        \else
+          \pgfmathparse{mod(\j,\xgridmodval)+mod(\i,\xgridmodval)==0}
+          \ifnum\pgfmathresult=1
+            \node[color=\xgridcolor, font=\fontsize{12pt}{12pt}\selectfont] at (\j+0.5-\xgridxshift, \i+0.5-\xgridyshift) {\myxgridcharalt};
+          \else
+            \node[color=\xgridcolor, font=\fontsize{12pt}{12pt}\selectfont] at (\j+0.5-\xgridxshift, \i+0.5-\xgridyshift) {\myxgridchar};
+          \fi
+        \fi
+
+      %% j-i is odd... space between the xs
+      \else
+        %% show a fleuron every m spaces
+        \ifnum\xgridflrmodval>0
+          \pgfmathparse{mod(\j-1+\xgridflrmodval,\xgridflrmodval)+mod(\i,\xgridflrmodval)==0}
+          \ifnum\pgfmathresult=1
+            \node[color=\xgridcolor, font=\fontsize{12pt}{12pt}\selectfont] at (\j+0.5-\xgridxshift, \i+0.5-\xgridyshift) {\myxgridflr};
+          \fi
+
+          \pgfmathparse{mod(\xgridflrmodval,2)==0}
+          \ifnum\pgfmathresult=1
+            \pgfmathparse{mod((\j-1+\xgridflrmodval/2),\xgridflrmodval) + mod(\i+\xgridflrmodval/2,\xgridflrmodval)==0}
+            \ifnum\pgfmathresult=1
+              \node[color=\xgridcolor, font=\fontsize{12pt}{12pt}\selectfont] at (\j+0.5-\xgridxshift, \i+0.5-\xgridyshift) {\xgridinitial};
+            \fi
+          \fi
+
+        \fi
+      \fi
+    }
+  }
+
+  \end{scope}
+}
+
+
+
+\pgfkeys{
+  /pompousframe/.is family,
+  pompousframe/charN/.store in = \pompN,
+  pompousframe/charNE/.store in = \pompNE,
+  pompousframe/charE/.store in = \pompE,
+  pompousframe/charSE/.store in = \pompSE,
+  pompousframe/charS/.store in = \pompS,
+  pompousframe/charSW/.store in = \pompSW,
+  pompousframe/charW/.store in = \pompW,
+  pompousframe/charNW/.store in = \pompNW,
+  pompousframe/Nx/.store in = \pompNx,
+  pompousframe/Ny/.store in = \pompNy,
+  pompousframe/text/.store in = \pomptext,
+  /pompousframe/position/.store in=\pompCenterPos,
+  /pompousframe/background/.store in=\pompBackgroundColor,
+}
+\newcommand{\pompousframe}[1]{%
+  \def\pompN{\ornament{51}}
+  \def\pompNE{\ornament{33}}
+  \def\pompE{\ornament{49}}
+  \def\pompSE{\ornament{9}}
+  \def\pompS{\ornament{24}}
+  \def\pompSW{\ornament{20}}
+  \def\pompW{\ornament{22}}
+  \def\pompNW{\ornament{45}}
+  \def\pomptext{{}}
+  \def\pompCenterPos{(0,0)}
+  \def\pompBackgroundColor{}
+
+
+  \pgfkeys{/pompousframe, #1}%
+
+%%   \pgfmathsetmacro{\xscale}{\pompDisplayWidth / (\pompNx * 12pt)}
+%%   \pgfmathsetmacro{\yscale}{\pompDisplayHeight / (\pompNy * 12pt)}
+
+  %\begin{scope}[xscale=\xscale, yscale=\yscale, transform shape]
+
+  \pgfmathsetmacro{\maxi}{(\pompNy - 1)}%
+  \pgfmathsetmacro{\maxj}{(\pompNx - 1)}%
+
+  % baseline row
+  \node[font=\fontsize{12pt}{12pt}\selectfont, anchor=base west] at (0,0) (bot) {%
+    \pompSW%
+    \foreach \i in {1,...,\maxj} {\pompS}%
+    \pompSE%
+  };
+
+  % Row directly above
+  \pgfmathsetmacro{\rowsep}{14.65} % 14.65pt vertical spacing
+  \node[font=\fontsize{12pt}{14.65pt}\selectfont, anchor=base west] at (0,\rowsep pt) {%
+    \pompW%
+    \foreach \j in {1,...,\maxj} {\phantom{\pompS}}%
+    \hspace{-0.35pt}\pompE%
+  };
+
+  % subsequent rows
+  \ifnum\pompNy>2
+  \pgfmathsetmacro{\rowsep}{18} % 18pt vertical spacing
+  \foreach \i in {2,...,\maxi}{
+    % subtract 3.35 pt b/c first row was 14.65pt not 18pt...
+    \node[font=\fontsize{12pt}{18pt}\selectfont, anchor=base west] at (0,\i*\rowsep pt - 3.35pt) {%
+      \pompW%
+      \foreach \j in {1,...,\maxj} {\phantom{\pompS}}%
+      \hspace{-0.35pt}\pompE%
+    };
+  }
+  \fi
+
+  % Top row
+  \pgfmathsetmacro{\ytop}{\maxi*\rowsep + 6.25}
+  \ifnum\pompNy<3
+    \pgfmathsetmacro{\ytop}{\ytop+3.35}
+  \fi
+  \node[font=\fontsize{12pt}{12pt}\selectfont, anchor=base west] at (0,\ytop pt) (top) {%
+    \pompNW%
+    \foreach \j in {1,...,\maxj} {\pompN}%
+    \pompNE%
+  };
+
+
+  \path (bot.north) -- (top.south) coordinate[midway] (centerline);
+  \node[align=center] at (centerline) {
+    \pomptext
+  };
+
+  %\end{scope}
+}
+
+\newcommand{\pompousframecentered}[1]{%
+  \providecommand\pompBackgroundColor{}
+  \pgfkeys{/pompousframe, #1}
+
+  % 1. Draw a dummy frame at origin to define (bot) and (top)
+  \begin{scope}[opacity=0]
+    \pompousframe{#1}
+  \end{scope}
+
+  % 2. Fit a bounding box around the dummy frame
+  \node[fit=(bot)(top), inner sep=0pt] (pompousbox) {};
+
+  % 3. Compute the shift to center
+  \path \pompCenterPos coordinate (pompctr);
+  \coordinate (frameshift) at ($(pompctr) - (pompousbox.center)$);
+
+  % 4. Draw frame AND background inside shifted scope
+  \begin{scope}[shift={(frameshift)}]
+
+    % 4a. Draw background color
+    \ifdefempty{\pompBackgroundColor}{
+      % no background
+    }{
+      % 4a1. Redraw the frame invisibly to define local (bot), (top)
+      \begin{scope}[opacity=0]
+        \pompousframe{#1}
+      \end{scope}
+
+      % 4a2. Fit new box around shifted frame
+      \node[fit=(bot)(top), inner sep=0pt] (localbox) {};
+
+      \fill[\pompBackgroundColor] 
+        (localbox.south west) rectangle (localbox.north east);
+    }
+
+    % 4d. Draw visible frame
+    \pompousframe{#1}
+
+  \end{scope}
+}
+
+
+
+
+\pgfkeys{
+  /dotframe/.is family,
+  dotframe/charv/.store in = \dotcharv,
+  dotframe/charh/.store in = \dotcharh,
+  dotframe/Nx/.store in = \dotNx,
+  dotframe/Ny/.store in = \dotNy,
+  dotframe/text/.store in = \dottext,
+  /dotframe/position/.store in=\dotCenterPos,
+  /dotframe/background/.store in=\dotBackgroundColor,
+}
+\newcommand{\dotframe}[1]{%
+  \def\dotcharh{\ornament{4}}
+  \def\dotcharv{\ornament{0}}
+  \def\dottext{{}}
+  \def\dotCenterPos{(0,0)}
+  \def\dotBackgroundColor{}
+
+
+  \pgfkeys{/dotframe, #1}%
+
+%%   \pgfmathsetmacro{\xscale}{\pompDisplayWidth / (\pompNx * 12pt)}
+%%   \pgfmathsetmacro{\yscale}{\pompDisplayHeight / (\pompNy * 12pt)}
+
+  %\begin{scope}[xscale=\xscale, yscale=\yscale, transform shape]
+
+  \pgfmathsetmacro{\maxi}{\dotNy}%
+  \pgfmathsetmacro{\maxj}{\dotNx}%
+
+  % baseline row
+  \node[font=\fontsize{12pt}{12pt}\selectfont, anchor=base west] at (0,0) (bot) {%
+    \foreach \i in {1,...,\maxj} {\dotcharh}%
+  };
+
+  % Row directly above
+  \pgfmathsetmacro{\rowsep}{7.25} % 14.65pt vertical spacing
+  \node[font=\fontsize{12pt}{12pt}\selectfont, anchor=base west] at (0,\rowsep pt) {%
+    \dotcharv%
+    \foreach \j in {1,...,\maxj} {\phantom{\dotcharh}}%
+    \hspace{-4.5pt}\dotcharv%
+  };
+
+  % subsequent rows
+  \ifnum\dotNy>1
+  \pgfmathsetmacro{\rowsep}{12} % 18pt vertical spacing
+  \foreach \i in {2,...,\maxi}{
+    % subtract 4.75 pt b/c first row was 14.65pt not 18pt...
+    \node[font=\fontsize{12pt}{12pt}\selectfont, anchor=base west] at (0,\i*\rowsep pt - 4.75pt) {%
+      \dotcharv%
+      \foreach \j in {1,...,\maxj} {\phantom{\dotcharh}}%
+      \hspace{-4.5pt}\dotcharv%
+    };
+  }
+  \fi
+
+  % Top row
+  \pgfmathsetmacro{\ytop}{\maxi*\rowsep}
+  \ifnum\dotNy<2
+    \pgfmathsetmacro{\ytop}{\ytop+4.75}
+  \fi
+  \node[font=\fontsize{12pt}{12pt}\selectfont, anchor=base west] at (0,\ytop pt) (top) {%
+    \foreach \i in {1,...,\maxj} {\dotcharh}%
+  };
+
+
+  \path (bot.north) -- (top.south) coordinate[midway] (centerline);
+  \node[align=center] at (centerline) {
+    \dottext
+  };
+
+  %\end{scope}
+}
+
+
+\newcommand{\dotframecentered}[1]{%
+  \providecommand\dotBackgroundColor{}
+  \pgfkeys{/dotframe, #1}
+
+  % 1. Draw a dummy frame at origin to define (bot) and (top)
+  \begin{scope}[opacity=0]
+    \dotframe{#1}
+  \end{scope}
+
+  % 2. Fit a bounding box around the dummy frame
+  \node[fit=(bot)(top), inner sep=0pt] (dotbox) {};
+
+  % 3. Compute the shift to center
+  \path \dotCenterPos coordinate (dotctr);
+  \coordinate (frameshift) at ($(dotctr) - (dotbox.center)$);
+
+  % 4. Draw frame AND background inside shifted scope
+  \begin{scope}[shift={(frameshift)}]
+
+    % 4a. Draw background color
+    \ifdefempty{\dotBackgroundColor}{
+      % no background
+    }{
+      % 4a1. Redraw the frame invisibly to define local (bot), (top)
+      \begin{scope}[opacity=0]
+        \dotframe{#1}
+      \end{scope}
+
+      % 4a2. Fit new box around shifted frame
+      \node[fit=(bot)(top), inner sep=0pt] (localbox) {};
+
+      \fill[\dotBackgroundColor] 
+        (localbox.south west) rectangle (localbox.north east);
+    }
+
+    % 4d. Draw visible frame
+    \dotframe{#1}
+
+  \end{scope}
+}

@@ -1,0 +1,60 @@
+\documentclass{standalone}
+\usepackage[usenames]{color} %used for font color
+
+\usepackage{caslondeco}
+
+\usepackage{xcolor}
+\definecolor{cornflowerblue}{HTML}{9ACEEB}
+\definecolor{cambridgeblue}{HTML}{839788}
+\definecolor{resedagreen}{HTML}{73877B}
+\definecolor{silver}{HTML}{BDBBB6}
+\definecolor{rose}{HTML}{E5D1D0}
+\definecolor{paledogwood}{HTML}{DDC2C0}
+
+
+\begin{document}
+\begin{tikzpicture}[x=12pt, y=12pt]
+
+  % Define dimensions
+  \def\cardWidth{3.5in}
+  \def\cardHeight{2.0in}
+  \def\margin{11pt}
+  \def\strokeWidth{8pt}
+
+  %% draw an invisible border so the page crops to this instead of content
+  \draw[black!20, line width=1pt] (0,0) rectangle (\cardWidth,\cardHeight);
+  \clip (0,0) rectangle (\cardWidth,\cardHeight);
+
+
+  \drawtilepattern{%
+    tileA=\mdbia,%
+    colorA=silver,%
+    tileB=\mdbia,%
+    colorB=silver,%
+    tileC=\mdbb,%
+    colorC=silver,%
+    tileD=\mdbib,%
+    colorD=silver,%
+    Nx=9,%
+    Ny=5,%
+    displaywidth=3.5in,%
+    displayheight=2in%
+  }
+
+
+  % Now shift everything so the frame is centered
+  \node[draw=none] at (\cardWidth/2, \cardHeight/2) (ctr) {};
+
+  \pompousframecentered{%
+    Nx=9,%
+    Ny=4,%
+    position={(\cardWidth/2, \cardHeight/2)},
+    text={\textsw{Pompous Extr. Maximus, Ph.D.}\\
+      \raisebox{-1.0pt}{\ornament{27}}\;\textsc{Piled Higher} \textsw{\&} \textsc{Deeper}\;\raisebox{-1.0pt}{\ornament{28}}\\
+      \textsw{minted} 2014},
+      background=white
+  }
+
+
+\end{tikzpicture}
+\end{document}
