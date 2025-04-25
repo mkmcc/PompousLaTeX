@@ -1,0 +1,240 @@
+\RequirePackage[LY1]{fontenc}
+\RequirePackage{ChaparralPro}
+
+\RequirePackage{xargs}
+
+\RequirePackage{etoolbox}
+
+\RequirePackage{tikz}
+\usetikzlibrary{positioning,fit,calc}
+\RequirePackage{pgfmath}
+
+\RequirePackage{ifthen}
+
+
+\pgfkeys{
+  /zigzagframe/.is family,
+  zigzagframe/charN/.store in = \zzN,
+  zigzagframe/charNE/.store in = \zzNE,
+  zigzagframe/charE/.store in = \zzE,
+  zigzagframe/charSE/.store in = \zzSE,
+  zigzagframe/charS/.store in = \zzS,
+  zigzagframe/charSW/.store in = \zzSW,
+  zigzagframe/charW/.store in = \zzW,
+  zigzagframe/charNW/.store in = \zzNW,
+  zigzagframe/Nx/.store in = \zzNx,
+  zigzagframe/Ny/.store in = \zzNy,
+  zigzagframe/text/.store in = \zztext,
+  /zigzagframe/position/.store in=\zzCenterPos,
+  /zigzagframe/background/.store in=\zzBackgroundColor,
+}
+\newcommand{\zigzagframe}[1]{%
+  \def\zzSW{\ornament{28}}
+  \def\zzSE{\ornament{29}}
+  \def\zzS{\ornament{23}}
+  \def\zzN{\ornament{23}}
+  \def\zzNW{\ornament{30}}
+  \def\zzNE{\ornament{31}}
+  \def\zzE{\rotatebox[origin=c]{90}{\ornament{23}}}
+  \def\zzW{\rotatebox[origin=c]{90}{\ornament{23}}}
+  \def\zztext{{}}
+  \def\zzCenterPos{(0,0)}
+  \def\zzBackgroundColor{}
+
+
+  \pgfkeys{/zigzagframe, #1}%
+
+  
+
+  \pgfmathsetmacro{\maxi}{\zzNy}%
+  \pgfmathsetmacro{\maxj}{\zzNx}%
+
+  % baseline row
+  \node[font=\fontsize{12pt}{12pt}\selectfont, anchor=base west] at (0,0) (bot) {%
+    \zzSW%
+    \foreach \i in {1,...,\maxj} {\zzS}%
+    \zzSE%
+  };
+
+  \pgfmathsetmacro{\rowsep}{10.1}
+
+  % Row directly above
+  \node[font=\fontsize{12pt}{12pt}\selectfont, anchor=base west] at (0,\rowsep pt) {%
+    \hspace{2.85pt}\zzW%
+    \foreach \j in {1,...,\maxj} {\phantom{\zzS}}%
+    \hspace{5.5pt}\zzE%
+  };
+
+  % 9.075
+
+  % subsequent rows
+  \ifnum\maxi>1
+  \pgfmathsetmacro{\rowsep}{8.065} % 18pt vertical spacing
+  \foreach \i in {2,...,\maxi}{
+    % add 2.035 pt b/c first row was 1.01pt not 8.065pt...
+    \node[font=\fontsize{12pt}{12pt}\selectfont, anchor=base west] at (0,\i*\rowsep pt + 2.035pt) {%
+      \hspace{2.85pt}\zzW%
+    \foreach \j in {1,...,\maxj} {\phantom{\zzS}}%
+    \hspace{5.5pt}\zzE%
+    };
+  }
+  \fi
+
+  % Top row
+  \pgfmathsetmacro{\ytop}{\maxi*\rowsep + \rowsep + 2.035 + 1.9}
+  \node[font=\fontsize{12pt}{12pt}\selectfont, anchor=base west] at (0,\ytop pt) (top) {%
+    \zzNW%
+    \foreach \j in {1,...,\maxj} {\zzN}%
+    \zzNE%
+  };
+ 
+  \path (bot.north) -- (top.south) coordinate[midway] (centerline);
+  \node[align=center] at (centerline) {
+    \zztext
+  };
+
+}
+
+\newcommand{\zigzagframecentered}[1]{%
+  \providecommand\zzBackgroundColor{}
+  \pgfkeys{/zigzagframe, #1}
+
+  % 1. Draw a dummy frame at origin to define (bot) and (top)
+  \begin{scope}[opacity=0]
+    \zigzagframe{#1}
+  \end{scope}
+
+  % 2. Fit a bounding box around the dummy frame
+  \node[fit=(bot)(top), inner sep=0pt] (zigzagbox) {};
+
+  % 3. Compute the shift to center
+  \path \zzCenterPos coordinate (zzctr);
+  \coordinate (frameshift) at ($(zzctr) - (zigzagbox.center)$);
+
+  % 4. Draw frame AND background inside shifted scope
+  \begin{scope}[shift={(frameshift)}]
+
+    % 4a. Draw background color
+    \ifdefempty{\zzBackgroundColor}{
+      % no background
+    }{
+      % 4a1. Redraw the frame invisibly to define local (bot), (top)
+      \begin{scope}[opacity=0]
+        \zigzagframe{#1}
+      \end{scope}
+
+      % 4a2. Fit new box around shifted frame
+      \node[fit=(bot)(top), inner sep=0pt] (localbox) {};
+
+      \fill[\zzBackgroundColor] 
+        (localbox.south west) rectangle (localbox.north east);
+    }
+
+    % 4d. Draw visible frame
+    \zigzagframe{#1}
+
+  \end{scope}
+}
+
+
+
+\pgfkeys{
+  /dominoframe/.is family,
+  dominoframe/Nx/.store in = \domNx,
+  dominoframe/Ny/.store in = \domNy,
+  dominoframe/text/.store in = \domtext,
+  /dominoframe/position/.store in=\domCenterPos,
+  /dominoframe/background/.store in=\domBackgroundColor,
+}
+\newcommand{\dominoframe}[1]{%
+  \def\domtext{{}}
+  \def\domCenterPos{(0,0)}
+  \def\domBackgroundColor{}
+
+
+  \pgfkeys{/dominoframe, #1}%  
+
+  \pgfmathsetmacro{\maxi}{\domNy-1}%
+  \pgfmathsetmacro{\maxj}{\domNx}%
+
+  % baseline row
+  \node[font=\fontsize{12pt}{12pt}\selectfont, anchor=base west] at (0,0) (bot) {%
+    \ornament{0}%
+    \foreach \i in {1,...,\maxj} {\ornament{2}\ornament{0}}%
+  };
+
+  \pgfmathsetmacro{\rowsep}{12}
+
+  % Rows directly above
+  \foreach \i in {1,...,\maxi}{
+    \node[font=\fontsize{12pt}{12pt}\selectfont, anchor=base west] at (0,2*\i*\rowsep - \rowsep pt) {%
+      \ornament{2}%
+      \foreach \j in {1,...,\maxj} {\phantom{\ornament{2}{\ornament{0}}}}%
+      \hspace{-12pt}\ornament{2}%
+    };
+    \node[font=\fontsize{12pt}{12pt}\selectfont, anchor=base west] at (0,2*\i*\rowsep pt) {%
+      \ornament{0}%
+      \foreach \j in {1,...,\maxj} {\phantom{\ornament{2}{\ornament{0}}}}%
+      \hspace{-12pt}\ornament{0}%
+    };
+  }
+  \node[font=\fontsize{12pt}{12pt}\selectfont, anchor=base west] at (0,2*\maxi*\rowsep + \rowsep pt) {%
+    \ornament{2}%
+    \foreach \j in {1,...,\maxj} {\phantom{\ornament{2}{\ornament{0}}}}%
+    \hspace{-12pt}\ornament{2}%
+  };
+
+  % Top row
+  \pgfmathsetmacro{\ytop}{2*\maxi*\rowsep + 2*\rowsep}
+  \node[font=\fontsize{12pt}{12pt}\selectfont, anchor=base west] at (0,\ytop pt) (top) {%
+    \ornament{0}%
+    \foreach \i in {1,...,\maxj} {\ornament{2}\ornament{0}}%
+  };
+ 
+  \path (bot.north) -- (top.south) coordinate[midway] (centerline);
+  \node[align=center] at (centerline) {
+    \domtext
+  };
+
+}
+
+\newcommand{\dominoframecentered}[1]{%
+  \providecommand\domBackgroundColor{}
+  \pgfkeys{/dominoframe, #1}
+
+  % 1. Draw a dummy frame at origin to define (bot) and (top)
+  \begin{scope}[opacity=0]
+    \dominoframe{#1}
+  \end{scope}
+
+  % 2. Fit a bounding box around the dummy frame
+  \node[fit=(bot)(top), inner sep=0pt] (dominobox) {};
+
+  % 3. Compute the shift to center
+  \path \domCenterPos coordinate (domctr);
+  \coordinate (frameshift) at ($(domctr) - (dominobox.center)$);
+
+  % 4. Draw frame AND background inside shifted scope
+  \begin{scope}[shift={(frameshift)}]
+
+    % 4a. Draw background color
+    \ifdefempty{\domBackgroundColor}{
+      % no background
+    }{
+      % 4a1. Redraw the frame invisibly to define local (bot), (top)
+      \begin{scope}[opacity=0]
+        \dominoframe{#1}
+      \end{scope}
+
+      % 4a2. Fit new box around shifted frame
+      \node[fit=(bot)(top), inner sep=0pt] (localbox) {};
+
+      \fill[\domBackgroundColor] 
+        (localbox.south west) rectangle (localbox.north east);
+    }
+
+    % 4d. Draw visible frame
+    \dominoframe{#1}
+
+  \end{scope}
+}
